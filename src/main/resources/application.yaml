@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: account-service
+  datasource:
+    url: jdbc:postgresql://localhost:5433/mybankdb
+    username: devadmin
+    password: devadmin123pass
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.yaml

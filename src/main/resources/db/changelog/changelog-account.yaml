@@ -1,0 +1,70 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-account-table
+      author: nikolai
+      changes:
+        - createTable:
+            tableName: bank_account
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: iban
+                  type: VARCHAR(34)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: holder_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create-account-balance-table
+      author: nikolai
+      changes:
+        - createTable:
+            tableName: bank_account_balance
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: bank_account_uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency_code
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: BIGINT
+                  defaultValue: "0"
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: bank_account_balance
+            baseColumnNames: bank_account_uuid
+            referencedTableName: bank_account
+            referencedColumnNames: uuid
+            constraintName: fk_bank_account_balance_bank_account
+            onDelete: CASCADE
