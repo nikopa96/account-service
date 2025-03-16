@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-sample-bank-accounts
+      author: nikolai
+      changes:
+        - insert:
+            tableName: bank_account
+            columns:
+              - column: { name: uuid, value: '737c7fb6-5cec-4bbb-aed6-fc54635357d8' }
+              - column: { name: iban, value: "EE511287154215965472" }
+              - column: { name: holder_name, value: "ADAM SMITH" }
+              - column: { name: created_at, valueDate: "2025-03-16T12:34:56" }
+              - column: { name: updated_at, valueDate: "2025-03-16T12:34:56" }
+        - insert:
+            tableName: bank_account
+            columns:
+              - column: { name: uuid, value: 'edac60d0-ff91-4afa-af90-80655206eb1d' }
+              - column: { name: iban, value: "EE951266739722198152" }
+              - column: { name: holder_name, value: "BEST COMPANY AS" }
+              - column: { name: created_at, valueDate: "2025-03-16T12:35:56" }
+              - column: { name: updated_at, valueDate: "2025-03-16T12:35:56" }
+  - changeSet:
+      id: insert-sample-bank-account-balances-1
+      author: nikolai
+      changes:
+        - insert:
+            tableName: bank_account_balance
+            columns:
+              - column: { name: uuid, value: '4f2fe96e-58e6-46e1-bc3c-210e29b37935' }
+              - column: { name: bank_account_uuid, value: "737c7fb6-5cec-4bbb-aed6-fc54635357d8" }
+              - column: { name: currency_code, value: "EUR" }
+              - column: { name: balance, value: "199999" }
+        - insert:
+            tableName: bank_account_balance
+            columns:
+              - column: { name: uuid, value: '984c51bc-9865-428e-9bee-2883b77346bc' }
+              - column: { name: bank_account_uuid, value: "737c7fb6-5cec-4bbb-aed6-fc54635357d8" }
+              - column: { name: currency_code, value: "USD" }
+              - column: { name: balance, value: "3025080" }
+        - insert:
+            tableName: bank_account_balance
+            columns:
+              - column: { name: uuid, value: 'fe9de69b-a546-4ad4-821a-ebde0571e9f0' }
+              - column: { name: bank_account_uuid, value: "737c7fb6-5cec-4bbb-aed6-fc54635357d8" }
+              - column: { name: currency_code, value: "SEK" }
+              - column: { name: balance, value: "11000080" }
+        - insert:
+            tableName: bank_account_balance
+            columns:
+              - column: { name: uuid, value: '24b75754-b701-47c4-a5d3-1e280be52e55' }
+              - column: { name: bank_account_uuid, value: "737c7fb6-5cec-4bbb-aed6-fc54635357d8" }
+              - column: { name: currency_code, value: "RUB" }
+              - column: { name: balance, value: "800000000" }
+  - changeSet:
+      id: insert-sample-bank-account-balances-2
+      author: nikolai
+      changes:
+        - insert:
+            tableName: bank_account_balance
+            columns:
+              - column: { name: uuid, value: 'b813420b-d377-46ff-8c22-6307724b32d6' }
+              - column: { name: bank_account_uuid, value: "edac60d0-ff91-4afa-af90-80655206eb1d" }
+              - column: { name: currency_code, value: "EUR" }
+              - column: { name: balance, value: "2500000" }
+        - insert:
+            tableName: bank_account_balance
+            columns:
+              - column: { name: uuid, value: '01faa9fc-e2d5-468d-8fdc-df24b40487f1' }
+              - column: { name: bank_account_uuid, value: "edac60d0-ff91-4afa-af90-80655206eb1d" }
+              - column: { name: currency_code, value: "USD" }
+              - column: { name: balance, value: "567000000" }

@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changelog-account.yaml
+  - include:
+      file: db/changelog/insert-sample-data.yaml
