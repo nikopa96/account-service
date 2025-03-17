@@ -1,7 +1,7 @@
 package com.mybank.accountservice.controller;
 
 import com.mybank.accountservice.api.AccountApi;
-import com.mybank.accountservice.api.model.AccountResponse;
+import com.mybank.accountservice.api.model.AccountBalanceProperties;
 import com.mybank.accountservice.api.model.AccountTotalRequest;
 import com.mybank.accountservice.api.model.AccountTotalResponse;
 import com.mybank.accountservice.api.model.CurrencyCode;
@@ -19,8 +19,8 @@ public class AccountController implements AccountApi {
     private final AccountBalanceService accountBalanceService;
 
     @Override
-    public ResponseEntity<AccountResponse> getBankAccountBalanceByCurrency(String iban, CurrencyCode currencyCode) {
-        return ResponseEntity.ok(accountBalanceService.getAccountBalanceByCurrency(iban, currencyCode));
+    public ResponseEntity<AccountBalanceProperties> getAccountBalanceProperties(String iban, CurrencyCode currencyCode) {
+        return ResponseEntity.ok(accountBalanceService.getAccountBalanceProperties(iban, currencyCode));
     }
 
     @Override

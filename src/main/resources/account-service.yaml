@@ -19,9 +19,9 @@ paths:
     get:
       tags:
         - Account
-      summary: Internal endpoint. Find a balance of the bank account by currency code
-      description: Internal endpoint. Find a balance of the bank account by currency code
-      operationId: getBankAccountBalanceByCurrency
+      summary: Internal endpoint. Find properties of the account balance by IBAN and currency code
+      description: Internal endpoint. Find properties of the account balance by IBAN and currency code
+      operationId: getAccountBalanceProperties
       parameters:
         - name: iban
           in: path
@@ -41,9 +41,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountResponse'
+                $ref: '#/components/schemas/AccountBalanceProperties'
         '404':
           description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
   /accounts/balances/total:
     post:
       tags:
@@ -67,8 +72,18 @@ paths:
                 $ref: '#/components/schemas/AccountTotalResponse'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
         '422':
           description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                nullable: true
 components:
   schemas:
     CurrencyCode:
@@ -96,13 +111,12 @@ components:
           type: number
           format: double
           example: 1234.56
-    AccountResponse:
+    AccountBalanceProperties:
       type: object
       properties:
-        account:
-          $ref: '#/components/schemas/Account'
-        balance:
-          $ref: '#/components/schemas/AccountBalance'
+        bankAccountBalanceUuid:
+          type: string
+          format: uuid
     AccountTotal:
       type: object
       properties:

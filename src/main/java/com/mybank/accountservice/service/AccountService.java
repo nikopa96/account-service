@@ -5,9 +5,9 @@ import com.mybank.accountservice.api.model.AccountTotalResponse;
 import com.mybank.accountservice.api.model.CurrencyCode;
 import com.mybank.accountservice.entity.BankAccountBalanceEntity;
 import com.mybank.accountservice.entity.BankAccountEntity;
-import com.mybank.accountservice.exception.UnprocessableEntityException;
 import com.mybank.accountservice.mapper.AccountMapper;
 import com.mybank.accountservice.repository.BankAccountRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class AccountService {
         Optional<BankAccountEntity> bankAccountOpt = bankAccountRepository.findByIban(iban);
 
         BankAccountEntity bankAccount = bankAccountOpt
-                .orElseThrow(() -> new UnprocessableEntityException("Unable to find an account for this IBAN"));
+                .orElseThrow(() -> new EntityNotFoundException("Unable to find an account for this IBAN"));
 
         List<BankAccountBalanceEntity> convertedAccountBalances = currencyConversionService
                 .convertBalanceToCurrency(bankAccount.getBalances(), currencyCode);
