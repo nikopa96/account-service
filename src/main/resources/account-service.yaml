@@ -41,7 +41,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BankAccountResponse'
+                $ref: '#/components/schemas/AccountResponse'
         '404':
           description: Not found
   /accounts/balances/total:
@@ -56,7 +56,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BankAccountTotalRequest'
+              $ref: '#/components/schemas/AccountTotalRequest'
         required: true
       responses:
         '200':
@@ -64,7 +64,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BankAccountTotalResponse'
+                $ref: '#/components/schemas/AccountTotalResponse'
         '400':
           description: Bad request
         '422':
@@ -78,7 +78,7 @@ components:
         - USD
         - SEK
         - RUB
-    BankAccount:
+    Account:
       type: object
       properties:
         iban:
@@ -87,7 +87,7 @@ components:
         holderName:
           type: string
           example: 'ADAM SMITH'
-    BankAccountBalance:
+    AccountBalance:
       type: object
       properties:
         currencyCode:
@@ -96,14 +96,14 @@ components:
           type: number
           format: double
           example: 1234.56
-    BankAccountResponse:
+    AccountResponse:
       type: object
       properties:
         account:
-          $ref: '#/components/schemas/BankAccount'
+          $ref: '#/components/schemas/Account'
         balance:
-          $ref: '#/components/schemas/BankAccountBalance'
-    BankAccountTotal:
+          $ref: '#/components/schemas/AccountBalance'
+    AccountTotal:
       type: object
       properties:
         currencyCode:
@@ -112,7 +112,7 @@ components:
           type: number
           format: double
           example: 1234.56
-    BankAccountTotalRequest:
+    AccountTotalRequest:
       type: object
       properties:
         iban:
@@ -123,14 +123,14 @@ components:
       required:
         - iban
         - currencyCode
-    BankAccountTotalResponse:
+    AccountTotalResponse:
       type: object
       properties:
         account:
-          $ref: '#/components/schemas/BankAccount'
+          $ref: '#/components/schemas/Account'
         balances:
           type: array
           items:
-            $ref: '#/components/schemas/BankAccountBalance'
+            $ref: '#/components/schemas/AccountBalance'
         total:
-          $ref: '#/components/schemas/BankAccountTotal'
+          $ref: '#/components/schemas/AccountTotal'
