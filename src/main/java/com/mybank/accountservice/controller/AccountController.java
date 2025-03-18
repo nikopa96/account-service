@@ -20,11 +20,11 @@ public class AccountController implements AccountApi {
 
     @Override
     public ResponseEntity<AccountBalanceProperties> getAccountBalanceProperties(String iban, CurrencyCode currencyCode) {
-        return ResponseEntity.ok(accountBalanceService.getAccountBalanceProperties(iban, currencyCode));
+        return ResponseEntity.ok(accountBalanceService.getAccountBalanceProperties(iban, currencyCode.getValue()));
     }
 
     @Override
     public ResponseEntity<AccountTotalResponse> getBankAccountTotal(AccountTotalRequest request) {
-        return ResponseEntity.ok(accountService.getAccountTotal(request.getIban(), request.getCurrencyCode()));
+        return ResponseEntity.ok(accountService.getAccountTotal(request.getIban(), request.getCurrencyCode().getValue()));
     }
 }

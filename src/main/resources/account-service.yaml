@@ -111,6 +111,12 @@ components:
           type: number
           format: double
           example: 1234.56
+        convertedBalanceCurrencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        convertedBalance:
+          type: number
+          format: double
+          example: 1234.56
     AccountBalanceProperties:
       type: object
       properties:
@@ -122,7 +128,7 @@ components:
       properties:
         currencyCode:
           $ref: '#/components/schemas/CurrencyCode'
-        balance:
+        balanceTotal:
           type: number
           format: double
           example: 1234.56

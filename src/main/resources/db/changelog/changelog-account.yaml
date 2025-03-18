@@ -68,3 +68,29 @@ databaseChangeLog:
             referencedColumnNames: uuid
             constraintName: fk_bank_account_balance_bank_account
             onDelete: CASCADE
+  - changeSet:
+      id: create-exchange_rate-table
+      author: nikolai
+      changes:
+        - createTable:
+            tableName: exchange_rate
+            columns:
+              - column:
+                  name: base_currency
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: convertible_currency
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exchange_rate
+                  type: DECIMAL(10,5)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: exchange_rate
+            columnNames: base_currency, convertible_currency
+            constraintName: pk_exchange_rate

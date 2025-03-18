@@ -1,7 +1,6 @@
 package com.mybank.accountservice.service;
 
 import com.mybank.accountservice.api.model.AccountBalanceProperties;
-import com.mybank.accountservice.api.model.CurrencyCode;
 import com.mybank.accountservice.entity.BankAccountBalanceEntity;
 import com.mybank.accountservice.repository.BankAccountBalanceRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,9 +15,9 @@ public class AccountBalanceService {
 
     private final BankAccountBalanceRepository bankAccountBalanceRepository;
 
-    public AccountBalanceProperties getAccountBalanceProperties(String iban, CurrencyCode currency) {
+    public AccountBalanceProperties getAccountBalanceProperties(String iban, String currency) {
         Optional<BankAccountBalanceEntity> bankAccountBalanceOpt = bankAccountBalanceRepository
-                .findBankAccountBalanceByIbanAndCurrency(iban, currency.getValue());
+                .findBankAccountBalanceByIbanAndCurrency(iban, currency);
 
         BankAccountBalanceEntity bankAccountBalance = bankAccountBalanceOpt
                 .orElseThrow(() -> new EntityNotFoundException("Unable to find an account balance by this IBAN and " +

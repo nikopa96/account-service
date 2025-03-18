@@ -69,3 +69,31 @@ databaseChangeLog:
               - column: { name: bank_account_uuid, value: "edac60d0-ff91-4afa-af90-80655206eb1d" }
               - column: { name: currency_code, value: "USD" }
               - column: { name: balance, value: "567000000" }
+  - changeSet:
+      id: insert-sample-eur-exchange_rates-1
+      author: nikolai
+      changes:
+        - insert:
+            tableName: exchange_rate
+            columns:
+              - column: { name: base_currency, value: "EUR" }
+              - column: { name: convertible_currency, value: "EUR" }
+              - column: { name: exchange_rate, value: "1" }
+        - insert:
+            tableName: exchange_rate
+            columns:
+              - column: { name: base_currency, value: "EUR" }
+              - column: { name: convertible_currency, value: "USD" }
+              - column: { name: exchange_rate, value: "0.92" }
+        - insert:
+            tableName: exchange_rate
+            columns:
+              - column: { name: base_currency, value: "EUR" }
+              - column: { name: convertible_currency, value: "SEK" }
+              - column: { name: exchange_rate, value: "0.091" }
+        - insert:
+            tableName: exchange_rate
+            columns:
+              - column: { name: base_currency, value: "EUR" }
+              - column: { name: convertible_currency, value: "RUB" }
+              - column: { name: exchange_rate, value: "0.011" }
