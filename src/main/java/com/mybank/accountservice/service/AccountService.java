@@ -1,8 +1,8 @@
 package com.mybank.accountservice.service;
 
 import com.mybank.accountservice.api.model.*;
+import com.mybank.accountservice.entity.BankAccountBalanceEntity;
 import com.mybank.accountservice.entity.BankAccountEntity;
-import com.mybank.accountservice.model.AccountBalanceInBigDecimal;
 import com.mybank.accountservice.repository.BankAccountRepository;
 import com.mybank.accountservice.util.ExchangeCurrencyUtil;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,23 +21,16 @@ public class AccountService {
     private final ExchangeCurrencyService exchangeCurrencyService;
     private final BankAccountRepository bankAccountRepository;
 
-    public AccountTotalResponse getAccountTotal(String iban, String currencyCode) {
+    public AccountTotalResponse getAccountTotal(String iban, CurrencyCode currencyCode) {
         Optional<BankAccountEntity> bankAccountOpt = bankAccountRepository.findByIban(iban);
 
         BankAccountEntity bankAccount = bankAccountOpt
                 .orElseThrow(() -> new EntityNotFoundException("Unable to find an account for this IBAN"));
 
-        var exchangeRates = exchangeCurrencyService.getExchangeRates("EUR");
+        var exchangeRates = exchangeCurrencyService.getExchangeRates(CurrencyCode.EUR);
 
-        var balancesWithoutCurrencyConversion = bankAccount.getBalances().stream()
-                .map(balance -> AccountBalanceInBigDecimal.builder()
-                        .currencyCode(balance.getCurrencyCode())
-                        .balance(new BigDecimal(balance.getBalance()).movePointLeft(2))
-                        .build())
-                .toList();
-
-        var balancesWithCurrencyConversion = convertBalancesToSpecificCurrency(balancesWithoutCurrencyConversion,
-                exchangeRates, currencyCode);
+        var balancesWithCurrencyConversion = convertBalancesToSpecificCurrency(bankAccount.getBalances(), exchangeRates,
+                currencyCode);
         var balanceTotal = balancesWithCurrencyConversion.stream()
                 .map(AccountBalance::getConvertedBalance)
                 .mapToDouble(Double::doubleValue)
@@ -50,22 +43,23 @@ public class AccountService {
                         .build())
                 .balances(balancesWithCurrencyConversion)
                 .total(AccountTotal.builder()
-                        .currencyCode(CurrencyCode.valueOf(currencyCode))
+                        .currencyCode(currencyCode)
                         .balanceTotal(balanceTotal)
                         .build())
                 .build();
     }
 
-    private List<AccountBalance> convertBalancesToSpecificCurrency(List<AccountBalanceInBigDecimal> balances,
-                                                                   Map<String, BigDecimal> exchangeRates,
-                                                                   String currencyTo) {
+    private List<AccountBalance> convertBalancesToSpecificCurrency(List<BankAccountBalanceEntity> balances,
+                                                                   Map<CurrencyCode, BigDecimal> exchangeRates,
+                                                                   CurrencyCode currencyTo) {
         return balances.stream()
                 .map(balance -> AccountBalance.builder()
                         .currencyCode(CurrencyCode.valueOf(balance.getCurrencyCode()))
-                        .balance(balance.getBalance().doubleValue())
-                        .convertedBalanceCurrencyCode(CurrencyCode.valueOf(currencyTo))
+                        .balance(new BigDecimal(balance.getBalance()).movePointLeft(2).doubleValue())
+                        .convertedBalanceCurrencyCode(currencyTo)
                         .convertedBalance(ExchangeCurrencyUtil.convertToCurrency(balance.getBalance(),
-                                balance.getCurrencyCode(), currencyTo, exchangeRates).doubleValue())
+                                CurrencyCode.valueOf(balance.getCurrencyCode()), currencyTo, exchangeRates)
+                                .doubleValue())
                         .build())
                 .toList();
     }

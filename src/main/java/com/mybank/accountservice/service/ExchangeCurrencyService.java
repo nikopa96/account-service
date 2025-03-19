@@ -1,5 +1,6 @@
 package com.mybank.accountservice.service;
 
+import com.mybank.accountservice.api.model.CurrencyCode;
 import com.mybank.accountservice.entity.ExchangeRateEntity;
 import com.mybank.accountservice.repository.ExchangeRateRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,12 @@ public class ExchangeCurrencyService {
 
     private final ExchangeRateRepository exchangeRateRepository;
 
-    public Map<String, BigDecimal> getExchangeRates(String baseCurrency) {
-        var exchangeRates = exchangeRateRepository.findAllByBaseCurrency(baseCurrency);
+    public Map<CurrencyCode, BigDecimal> getExchangeRates(CurrencyCode baseCurrency) {
+        var exchangeRates = exchangeRateRepository.findAllByBaseCurrency(baseCurrency.getValue());
 
         return exchangeRates.stream()
                 .collect(Collectors.toMap(
-                        ExchangeRateEntity::getConvertibleCurrency,
+                        exchangeRate -> CurrencyCode.valueOf(exchangeRate.getConvertibleCurrency()),
                         ExchangeRateEntity::getExchangeRate
                 ));
     }

@@ -25,6 +25,6 @@ public class AccountController implements AccountApi {
 
     @Override
     public ResponseEntity<AccountTotalResponse> getBankAccountTotal(AccountTotalRequest request) {
-        return ResponseEntity.ok(accountService.getAccountTotal(request.getIban(), request.getCurrencyCode().getValue()));
+        return ResponseEntity.ok(accountService.getAccountTotal(request.getIban(), request.getCurrencyCode()));
     }
 }
