@@ -1,2 +1,4 @@
-# account-service
-Account microservice for MyBank
+# Account service
+One of MyBank's microservices
+
+[**Link to the parent project**](https://github.com/nikopa96/mybank-api)
