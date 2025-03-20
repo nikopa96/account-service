@@ -18,6 +18,8 @@ spring:
     change-log: classpath:db/changelog/changelog-master.yaml
 
 ---
+server:
+  port: 8080
 spring:
   config:
     activate:
