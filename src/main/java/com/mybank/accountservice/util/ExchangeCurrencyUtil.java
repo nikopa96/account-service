@@ -16,7 +16,7 @@ public class ExchangeCurrencyUtil {
         BigDecimal currencyFromRate = exchangeRates.get(currencyFrom);
         BigDecimal currencyToRate = exchangeRates.get(currencyTo);
 
-        return currencyFromRate.divide(currencyToRate, RoundingMode.HALF_EVEN).multiply(amountDecimal)
+        return currencyFromRate.divide(currencyToRate, 5, RoundingMode.HALF_EVEN).multiply(amountDecimal)
                 .setScale(2, RoundingMode.HALF_EVEN);
     }
 }
